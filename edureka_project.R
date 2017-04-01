@@ -20,11 +20,18 @@ table(df.retail$Purchase.Channel)
 df.retail = subset(df.retail, select = -c(1,3))
 str(df.retail)
 # split input and output 
-x <- df.retail[,1:8] 
+x <- df.retail[,1:4] 
 y <- df.retail[,9]
 #boxplot for all dependent variables
-#par(mfrow=c(1,8)) 
-#for(i in 1:8) {
-#boxplot(x[,i], main=names(df.retail)[i]) }
-
-
+par(mfrow=c(1,4)) 
+for(i in 1:4) {
+boxplot(x[,i], main=names(df.retail)[i]) }
+barplot(df.retail$Mens.Merchandise)
+hist(df.retail$Mens.Merchandise)
+table(df.retail$Area)
+barplot(xtabs(~df.retail$Area))
+hist(df.retail$Spend.Numeric)
+boxplot(df.retail$Spend.Numeric, horizontal = TRUE)
+barplot(table(df.retail$Area))
+plot(Spend.Numeric~Purchase.Channel, data=df.retail)
+pairs(df.retail[,c(1,2,5,6,7)])
