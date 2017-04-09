@@ -27,3 +27,13 @@ pairs(df.retail[,c(1,2,5,6,7)])
 table(df.retail$Area)
 plot(df.retail$Area ~ df.retail$Spend.Numeric)
 # next is data modelling
+#split the data into training and test
+# create a list of 80% of the rows in the original dataset we can use for training 
+validationIndex <- createDataPartition(dataset$Species, p=0.80, list=FALSE) 
+# select 20% of the data for validation 
+validation <- dataset[-validationIndex,] 
+# use the remaining 80% of data to training and testing the models 
+dataset <- dataset[validationIndex,]
+#create validation harness
+trainControl <- trainControl(method="cv", number=10)
+metric <- "Accuracy"
