@@ -30,12 +30,35 @@ dataset <- df.retail[validationIndex,]
 str(dataset)
 classifier= glm(formula=Sale.Made~.,
                 family=binomial,
-                data=dataset)
+                data=df.retail)
 summary(classifier)
-classifier= glm(formula=Sale.Made~Months.Since.Last.Buy,Spend.Category,New.Customer,
+classifier= glm(formula=Sale.Made~Months.Since.Last.Buy+Spend.Category+Spend.Category+Spend.Numeric+Mens.Merchandise+Womens.Merchandise+Area+New.Customer+Purchase.Channel+Visited.Website,
                 family=binomial,
-                data=dataset)
+                data=df.retail)
+#take out mens merchandise and Purchase Channels
+classifier= glm(formula=Sale.Made~Months.Since.Last.Buy+Spend.Category+Spend.Category+Spend.Numeric+Womens.Merchandise+Area+New.Customer+Visited.Website,
+                family=binomial,
+                data=df.retail)
+summary(classifier)
+#take out womens merchandise
+classifier= glm(formula=Sale.Made~Months.Since.Last.Buy+Spend.Category+Spend.Category+Spend.Numeric+Area+New.Customer+Visited.Website,
+                family=binomial,
+                data=df.retail)
+#take out spend
+classifier= glm(formula=Sale.Made~Months.Since.Last.Buy+Spend.Category+Spend.Category+Area+New.Customer+Visited.Website,
+                family=binomial,
+                data=df.retail)
+summary(classifier)
+#take out area
+classifier= glm(formula=Sale.Made~Months.Since.Last.Buy+Spend.Category+Spend.Category+New.Customer+Visited.Website,
+                family=binomial,
+                data=df.retail)
+summary(classifier)
 prob_pred=predict(classifier,type='response',newdata=validation[-10])
 y_pred=ifelse(prob_pred>0.5,1,0)
-cm=table(validation[,10],y_pred)
-summary(cm)
+#cm=table(validation[,10],y_pred)
+confusionMatrix(validation[,10],y_pred)
+table(validation[,10],y_pred)
+#confusionmatrix(actual,predicted)
+cm1 <- cm$overall
+summary(cm1)
