@@ -58,8 +58,11 @@ fit.cart <- train(Sale.Made~., data=dataset, method="rpart", metric=metric, trCo
 # Compare algorithms 
 results <- resamples(list(LG=fit.glm, LDA=fit.lda, GLMNET=fit.glmnet, KNN=fit.knn, CART=fit.cart, NB=fit.nb)) 
 summary(results) 
-pred <- predict(fit.glm,newdata =training[-10],type ='response')
+pred <- predict(fit.glm,newdata=validation[-10],type ='response')
 y_pred<- ifelse(pred > 0.5,1,0)
 cm <- table(y_pred,training$sal)
 table(y_pred)
-#head(training[10])
+head(validation[-10])
+str(dataset)
+str(validation)
+head(pred)
